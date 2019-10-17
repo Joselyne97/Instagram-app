@@ -1,0 +1,1 @@
+url(r'^$', views.feeds_photos, name = 'feeds'),
