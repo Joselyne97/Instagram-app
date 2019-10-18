@@ -1,0 +1,23 @@
+{%extends "users/base.html"%}
+
+{% block content %}
+
+<div class="col-sm-6 col-md-6">
+            {% if user.is_authenticated %}
+            
+                     <a href="/accounts/password/change"><button type='submit' class="btn btn-primary"> Change Password</button></a>
+                  
+                  
+                    <a href="/logout">Logout</a>
+                
+                
+            {% else %}
+            <li>
+              <a class='btn btn-default' href="/accounts/login">Login</a>
+            </li>
+
+            {% endif %}
+
+        </div>
+
+{% endblock %}
