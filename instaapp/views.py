@@ -1,26 +1,26 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from django.http  import HttpResponse,Http404,HttpResponseRedirect
-import datetime as dt
-from .models import Profile
-from .forms import InstagramLetterForm,NewPhotoForm
-from .email import send_welcome_email
+# import datetime as dt
+from .models import Profile,Image
+from .forms import InstagramLetterForm
+# from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+# from django.core.urlresolvers import reverse
+from django.contrib.auth.forms import UserCreationForm
 
-# Create your views here.
+@login_required(login_url='/accounts/login/')
+def welcome(request):
+    images = Image.objects.all()
 
-# def feeds_photos(request):
-#     date = dt.date.today
-#     feeds = Profile.todays_photo()
-#     if request.method == 'POST':
-#         form = NewsLetterForm(request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data['your_username']
-#             email = form.cleaned_data['email']
-#             recipient = NewsLetterRecipients(name = username,email =email)
-#             recipient.save()
-#             send_welcome_email(name,email)
-            
-#             HttpResponseRedirect('news_today')
-#     else:
-#         form = NewsLetterForm()
-#     return render(request, 'all-news/today-news.html', {"date": date,"news":news,"letterForm":form})
+    return render(request, 'users/welcome.html', {'images':images,})
+
+
+@login_required(login_url='/accounts/login/')
+def picture(request,picture_id):
+    try:
+        picture = Image.objects.get(id = picture_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request,"users/welcome.html", {"picture":picture})
+
