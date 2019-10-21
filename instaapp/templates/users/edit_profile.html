@@ -1,6 +1,6 @@
 {%extends "users/base.html"%}
 
-{% load bootstrap3 %} 
+{% load bootstrap4 %} 
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>New Post</title>
+  <title>Update profile</title>
   {{form.media}}
 
 {% block styles %} {% bootstrap_css %}
@@ -18,14 +18,14 @@
 </head>
 
 <body>
-
+  {% block content %}
   <form  action="{%url 'edit-profile'%}" method="post" enctype="multipart/form-data">
     {%csrf_token%}
 
     {% bootstrap_form form%}
-    <input type="submit" class="btn btn-success btn-lg" value="Post">
+    <input type="submit" class="btn btn-success btn-lg" value="update">
   </form>
-
+  {% endblock %}
    {% block scripts %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   {% bootstrap_javascript %} {% endblock %}
