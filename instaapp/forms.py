@@ -3,10 +3,10 @@ from .models import Profile,Image
 from django.contrib.auth.models import User
 
 
-class NewImageForm(forms.Form):
+class NewImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = [ 'image_name', 'user', 'profile']   
+        exclude = ['image_name', 'user', 'profile']   
 
 class NewProfileForm(forms.ModelForm):
     class Meta:
