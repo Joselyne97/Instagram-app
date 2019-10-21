@@ -13,18 +13,36 @@
 
     <div class="container">
         <div class="row">
-    
+            {%for picture in images%}
+
+            <div class="card">
+            {%if profile%}
             
+            <img src="{{profile.profile_pic.url}}" class="center-block img-responsive img-circle" alt="" style="width: 300px; height: 240px;">
+
+
+            {%endif%}
+
             <img src="{{picture.image.url}}" class="img-responsive" alt="" style="width: 300px; height: 240px;">
-            <h5>{{picture.caption}}</h5>
+            <h5>{{picture.user.username}}</h5>
+            <h6>{{picture.caption}}</h6>
+            <p>{{picture.pub_date|timesince}}</p>
+
+            
+            </div>
+            
+            <div class="row">
+                {% autoescape on %}
+                {{picture.caption| safe}}
+               {% endautoescape %}
+               </div>
+               
+               <!-- <h5>{{picture.caption}}</h5> -->
+            
 
             </div>
 
-            <div class="row">
-                {% autoescape on %}
-                {{picture.post| safe}}
-               {% endautoescape %}
-               </div>
+            
 
     </div>
 
