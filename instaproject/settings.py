@@ -67,6 +67,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 INSTALLED_APPS = [
     'tinymce',
+    'bootstrap4',
     'instaapp.apps.InstaappConfig',
     'bootstrap3',
     'django.contrib.admin',
