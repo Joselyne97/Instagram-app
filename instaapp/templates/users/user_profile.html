@@ -1,36 +1,88 @@
 {%extends "users/base.html"%}
 
 {% block content %}
-
+<br><br><br><br><br>
 <div class="container">
    
 <div class="row">
-  {% for profile in profile%}
+  {% for profile in user_profile%}
 
 <div class="col-md-5">
 
-<img src="{{profile.profile_pic.url}}" class="img-responsive img-circle" alt="" style="width: 300px; height: 240px;">
+<img src="{{profile.profile_pic.url}}" class="img-responsive img-circle center-block" alt="" style="width: 300px; height: 240px;">
 
-<h4>bio:{{profile.user}}</h4>
-</div>
-
+<br>
 
 
-    <div class="row">
-        {% autoescape on %}
+<h4 style="text-align: center"><strong> {{profile.full_name}}</strong></h4><br>
+
+<h4 style="text-align: center">
+  {% autoescape on %}
         {{profile.bio| safe}}
        {% endautoescape %}
-       </div>
+</h4>
+<br>
+</div>
 
-       {%endfor%}
+
+       
+
+    <div class="row">
+      <div class="col-md-4">
+          <h4>{{profile.user.username}}</h4>
+
+      </div>
+
+      <div class="col-md-4">
+          <a href="{%url 'edit-profile'%}"><button type="submit" class="btn btn-default">Edit Profile</button></a>
+      </div>
+        
+        
+      <div class="col-md-4">
+        <div class="dropdown">
+          <button type="button" class="fas fa-user-cog dropdown-toggle" data-toggle="dropdown">
+
+          </button>
+          <div class="dropdown-menu">
+
+            <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+          
+          </div>
+        </div>
+        
+        
+        </div>
+{%endfor%}
+</div>
 
 </div>
+<h1 style="text-align: center">Posts</h1><br>
+<br>
 <hr>
 
 <div class="row">
+  
   {%for image in images%}
-  <div class="col-md-5">
+  <div class="col-md-4">
+      <h6><strong>{{image.user.username}}</strong></h6>
       <img src="{{image.image.url}}" class="img-responsive" alt="" style="width: 300px; height: 240px;">
+
+      <a class="glyphicon glyphicon-heart" href="{% url 'like' id=image.id%}"></a>
+      <a class="far fa-comment" href="{% url 'new-comment' image.id%}"></a>
+      
+      <h6><strong>{{image.user.username}}: </strong>
+        <span>
+          {% autoescape on %}
+                {{image.caption| safe}}
+               {% endautoescape %}
+              </span> </h6>
+            
+            <p style="text-align: center">{{image.pub_date|timesince}}</p>
+            {% for com in image.comment_set.all %}
+            <span><p><strong>{{current_user.username}}:</strong>{{com.pub_date}}   {{com.comment}}</p></span>
+            {%endfor%}
+
   </div>
   {%endfor%}
 </div>
