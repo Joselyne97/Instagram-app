@@ -10,43 +10,41 @@
 <body>
 
     {% block content %}
+    <br><br><br><br><br>
 
     <div class="container">
-        <div class="row">
-            {%for picture in images%}
-
-            <div class="card">
-            {%if profile%}
-            
-            <img src="{{profile.profile_pic.url}}" class="center-block img-responsive img-circle" alt="" style="width: 300px; height: 240px;">
-
-
-            {%endif%}
-
-            <img src="{{picture.image.url}}" class="img-responsive" alt="" style="width: 300px; height: 240px;">
-            <h5>{{picture.user.username}}</h5>
-            <h6>{{picture.caption}}</h6>
-            <p>{{picture.pub_date|timesince}}</p>
-
-            
-            </div>
-            
             <div class="row">
-                {% autoescape on %}
-                {{picture.caption| safe}}
-               {% endautoescape %}
-               </div>
-               
-               <!-- <h5>{{picture.caption}}</h5> -->
-            
+  
+                    {%for image in images%}
+                    <div class="col-md-4">
+                        {% if user_profile%}
+                        <img src="{{user_profile.profile_pic.url}}" class="img-responsive img-circle center-block" alt="" style="width: 300px; height: 240px;">
 
-            </div>
+                        {%endif%}
+                        <h6><strong>{{image.user.username}}</strong></h6>
+                        <img src="{{image.image.url}}" class="img-responsive" alt="" style="width: 300px; height: 240px;">
 
-            
+                        <a class="glyphicon glyphicon-heart" href="{% url 'like' id=image.id%}"></a>
+                        <a class="far fa-comment" href="{% url 'new-comment' image.id%}"></a>
+                        <p>{{image.likes}} <strong>Likes</strong></p>
 
-    </div>
-
-            {% endfor %}
+                        <h6><strong>{{image.user.username}}: </strong>
+                            <span>
+                              {% autoescape on %}
+                                    {{image.caption| safe}}
+                                   {% endautoescape %}
+                                  </span> </h6>
+                              <p style="text-align: center">{{image.pub_date|timesince}}</p>
+                  
+                  {% for com in image.comment_set.all %}
+                  <span><p><strong>{{current_user.username}}:</strong> {{com.comment}}</p></span>
+                  {%endfor%}
+                  <a class="far fa-comment" href="{% url 'new-comment' image.id%}"></a>
+                
+                </div>
+                    {%endfor%}
+                  </div>
+                   
     {% endblock %}
     
 </body>
