@@ -3,50 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
 
-    
-    
+
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar bg-light navbar-fixed-top">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand"  href="{% url 'welcome' %}"><img src="/static/images/logo2.png" class="img-responsive" style="height: 1cm; margin: 5px; margin-left: 70px;"></a>
+            <div class="col-md-4" >
+                <a class="navbar-brand"  href="{% url 'welcome' %}"><img src="/static/images/logo2.png" class="img-responsive" style="height: 1cm; margin: 5px; margin-left: 30px;"></a>
 
-            </div> 
+            </div>
+            
+            <div class="col-md-4">
             <form class="navbar-form navbar-center" role="search" action="{% url 'search_results' %}">
           
-              <div class="form-group" style="margin-top: 20px;">
+              <div class="form-group" style="margin-top: 30px;">
                 <input type="text" class="form-control" placeholder="search username" name="search_results">
                 
               </div>
-      
+              
             </form>
-            
-            <div class="navbar">
-              <a class="navbar-brand" href="{% url 'new_picture' %}">New image</a>
 
-          </div>
-          <div class="navbar">
-              <a href="{%url 'edit-profile'%}">Update profile</a>
-          </div>
-          <div class="nav justify-content-end">
-            <a href="{%url 'user-profile' %}">My profile</a>
-          </div>
-
-          <div class="navbar">
-            <a href="/accounts/password/change"><button type='submit' class="btn btn-primary"> Change Password</button></a>
-
-        </div>
-
-        <div class="navbar">
-          <a href="/logout">Logout</a>
-
-      </div>
-            <div class="col-sm-4 col-md-4 navbar-right">
-
-                
-              </div>
+            </div>
+            <div class="col-md-4">
+              
+              <a class="navbar-brand" href="{% url 'new_picture' %}"><img src="/static/images/add icon.png" class="img-responsive" style="height: 1cm; width: 1cm; margin-bottom: 30px;"></a>
+              
+              <a class="navbar-brand" href="{%url 'user-profile' %}"><img src="/static/images/user icon.jpg" class="img-responsive" style="height: 1cm; width: 1cm; margin-bottom: 30px;"></a>
+          
+            </div>
+         
 
         </div>
 
