@@ -60,8 +60,9 @@ def user_profile(request):
     current_user = request.user
     images = Image.objects.filter(user=current_user)
     user_profile = Profile.objects.filter(user=current_user).first()
+    profile=Profile.objects.all()
 
-    return render(request, 'users/user_profile.html', {'images':images, 'user_profile':user_profile})
+    return render(request, 'users/user_profile.html', {'images':images, 'user_profile':user_profile, 'profile':profile})
 
 
 
@@ -84,7 +85,7 @@ def edit_profile(request):
     else:
             form=NewProfileForm()
 
-    return render(request, 'users/edit_profile.html', {'form':form})
+    return render(request, 'users/edit_profile.html', {'form':form, 'profile':profile})
 
 
 @login_required(login_url='/accounts/login/')
@@ -117,7 +118,7 @@ def new_comment(request, image_id):
     current_user = request.user
     image = Image.objects.get(id=image_id)
     print(f'image {image.id}')
-    # profile = Profile.objects.filter(user=current_user.id).first()
+    profile = Profile.objects.filter(user=current_user.id).first()
     if request.method == 'POST':
         form=NewCommentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -131,7 +132,7 @@ def new_comment(request, image_id):
     else:
         form = NewCommentForm()
 
-    return render(request, 'users/new_comment.html', {'form': form,'image':image, 'image_id':image_id})
+    return render(request, 'users/new_comment.html', {'form': form,'profile':profile, 'image':image, 'image_id':image_id})
 
 
 @login_required(login_url='/accounts/login/')

@@ -37,9 +37,9 @@
                               <p style="text-align: center">{{image.pub_date|timesince}}</p>
                   
                   {% for com in image.comment_set.all %}
-                  <span><p><strong>{{current_user.username}}:</strong> {{com.comment}}</p></span>
+                  <span><p><strong>{{com.user.username}}:</strong> {{com.comment}}</p></span>
                   {%endfor%}
-                  <a class="far fa-comment" href="{% url 'new-comment' image.id%}"></a>
+            
                 
                 </div>
                     {%endfor%}
