@@ -115,22 +115,23 @@ def search_results(request):
 @login_required(login_url='/accounts/login/')
 def new_comment(request, image_id):
     current_user = request.user
-    images = Image.objects.filter(user=image_id).first()
-    profile = Profile.objects.filter(user=current_user.id).first()
+    image = Image.objects.get(id=image_id)
+    print(f'image {image.id}')
+    # profile = Profile.objects.filter(user=current_user.id).first()
     if request.method == 'POST':
         form=NewCommentForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = profile
-            comment.image=images
+            comment.user = current_user
+            comment.image=image
             comment.save()
             
             return redirect('welcome')
 
-        else:
-            form = NewCommentForm()
+    else:
+        form = NewCommentForm()
 
-        return render(request, 'users/new_comment.html', {'form': form,'images':images, 'profile':profile, 'image_id':image_id})
+    return render(request, 'users/new_comment.html', {'form': form,'image':image, 'image_id':image_id})
 
 
 @login_required(login_url='/accounts/login/')
