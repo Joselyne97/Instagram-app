@@ -27,7 +27,7 @@ Joselyne MPAYIMANA
 
  ## Link of the website is:
 
- https://pers-gallery.herokuapp.com/
+ https://instaap.herokuapp.com/
 
  ## Copyright and license information:
 
