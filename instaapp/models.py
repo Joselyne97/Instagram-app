@@ -10,11 +10,7 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=60)
     user=models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
     
-    # @classmethod
-    # def get_all_id(cls)
-    #     profile = Profile.objects.get(user=id)
-    #     return profile
-
+    
     @classmethod
     def update_profile(cls,id,value):
         cls.objects.filter(id=id).update(user_id = new_user)
