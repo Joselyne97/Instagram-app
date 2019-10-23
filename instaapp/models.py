@@ -73,7 +73,6 @@ class Comment(models.Model):
     comment = models.CharField(max_length=100, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
 
     def save_comment(self):
