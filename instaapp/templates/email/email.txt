@@ -1,3 +1,0 @@
-Hello {{username}}
-
-Welcome to the Instagram app family You will find the most exciting news about Instagram users and updates!

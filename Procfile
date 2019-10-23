@@ -1,1 +1,1 @@
-web: gunicorn istaproject.wsgi --log-file -
+web: gunicorn istaproject.wsgi 
