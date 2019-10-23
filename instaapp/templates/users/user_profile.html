@@ -5,20 +5,20 @@
 <div class="container">
    
 <div class="row">
-  {% for profile in user_profile%}
+  {%if user_profile%}
 
 <div class="col-md-5">
 
-<img src="{{profile.profile_pic.url}}" class="img-responsive img-circle center-block" alt="" style="width: 300px; height: 240px;">
+<img src="{{user_profile.profile_pic.url}}" class="img-responsive img-circle center-block" alt="" style="width: 300px; height: 240px;">
 
 <br>
 
 
-<h4 style="text-align: center"><strong> {{profile.full_name}}</strong></h4><br>
+<h4 style="text-align: center"><strong> {{user_profile.full_name}}</strong></h4><br>
 
 <h4 style="text-align: center">
   {% autoescape on %}
-        {{profile.bio| safe}}
+        {{user_profile.bio| safe}}
        {% endautoescape %}
 </h4>
 <br>
@@ -29,7 +29,7 @@
 
     <div class="row">
       <div class="col-md-4">
-          <h4>{{profile.user.username}}</h4>
+          <h4>{{user_profile.user.username}}</h4>
 
       </div>
 
@@ -53,7 +53,7 @@
         
         
         </div>
-{%endfor%}
+{%endif%}
 </div>
 
 </div>
@@ -63,28 +63,39 @@
 
 <div class="row">
   
-  {%for image in images%}
-  <div class="col-md-4">
-      <h6><strong>{{image.user.username}}</strong></h6>
-      <img src="{{image.image.url}}" class="img-responsive" alt="" style="width: 300px; height: 240px;">
+    {%for image in images%}
+    <div class="col-md-4">
+        {% if user_profile%}
+        <div class="row">
+          
+          <img src="{{user_profile.profile_pic.url}}" class="img-responsive img-circle" alt="" style="width:50px;height:50px;border-radius:118px;">
+            <h6><strong>{{user_profile.user.username}}</strong></h6>
+        </div>
+        
+        {%endif%}
+        
+        <img src="{{image.image.url}}" class="img-responsive" alt="" style="width: 300px; height: 240px;">
 
-      <a class="glyphicon glyphicon-heart" href="{% url 'like' id=image.id%}"></a>
-      <a class="far fa-comment" href="{% url 'new-comment' image.id%}"></a>
-      
-      <h6><strong>{{image.user.username}}: </strong>
-        <span>
-          {% autoescape on %}
-                {{image.caption| safe}}
-               {% endautoescape %}
-              </span> </h6>
-            
-            <p style="text-align: center">{{image.pub_date|timesince}}</p>
-            {% for com in image.comment_set.all %}
-            <span><p><strong>{{current_user.username}}:</strong>{{com.pub_date}}   {{com.comment}}</p></span>
-            {%endfor%}
+        <a class="glyphicon glyphicon-heart" href="{% url 'like' id=image.id%}"></a>
+        <a class="far fa-comment" href="{% url 'new-comment' image.id%}"></a>
+        <p>{{image.likes}} <strong>Likes</strong></p>
 
-  </div>
+        <h6><strong>{{image.user.username}}: </strong>
+            <span>
+              {% autoescape on %}
+                    {{image.caption| safe}}
+                   {% endautoescape %}
+                  </span> </h6>
+              <p style="text-align: center">{{image.pub_date|timesince}}</p>
+  
+  {% for com in image.comment_set.all %}
+  <span><p><strong>{{com.user.username}}:</strong> {{com.comment}}</p></span>
   {%endfor%}
+
+
+</div>
+    {%endfor%}
+  </div>
 </div>
 
      

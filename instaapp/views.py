@@ -24,16 +24,6 @@ def welcome(request):
     return render(request, 'users/welcome.html', {'images':images,'user_profile':user_profile,'comment':comment})
 
 
-# @login_required(login_url='/accounts/login/')
-# def picture(request,picture_id):
-
-#     try:
-#         picture = Image.objects.get(id = picture_id)
-#     except DoesNotExist:
-#         raise Http404()
-
-#     return render(request,"users/welcome.html", {"picture":picture})
-
 
 @login_required(login_url='/accounts/login/')
 def new_picture(request):
@@ -58,11 +48,11 @@ def new_picture(request):
 @login_required(login_url='/accounts/login/')
 def user_profile(request):
     current_user = request.user
-    images = Image.objects.filter(user=current_user)
-    user_profile = Profile.objects.filter(user=current_user).first()
-    profile=Profile.objects.all()
+    images = Image.objects.filter(user=current_user).all()
+    user_profile = Profile.objects.filter(user=current_user.id).first()
+    
 
-    return render(request, 'users/user_profile.html', {'images':images, 'user_profile':user_profile, 'profile':profile})
+    return render(request, 'users/user_profile.html', {'images':images, 'user_profile':user_profile,})
 
 
 
@@ -70,7 +60,7 @@ def user_profile(request):
 @login_required(login_url='/accounts/login/')
 def edit_profile(request):
     current_user = request.user
-    profile = Profile.objects.filter(id=current_user.id)
+    # user_profile = Profile.objects.filter(user=current_user.id).first()
 
     if request.method == 'POST':
         form=NewProfileForm(request.POST, request.FILES)
@@ -85,7 +75,7 @@ def edit_profile(request):
     else:
             form=NewProfileForm()
 
-    return render(request, 'users/edit_profile.html', {'form':form, 'profile':profile})
+    return render(request, 'users/edit_profile.html', {'form':form,})
 
 
 @login_required(login_url='/accounts/login/')
@@ -103,21 +93,11 @@ def search_results(request):
         return render(request, 'users/search.html',{"message":message})
 
 
-# @login_required(login_url='/accounts/login/')
-# def comment(request,image_id):
-
-#     try:
-#         comment = Comment.objects.get(id = image_id)
-#     except DoesNotExist:
-#         raise Http404()
-
-#     return render(request,"users/welcome.html", {"comment":comment})
 
 @login_required(login_url='/accounts/login/')
 def new_comment(request, image_id):
     current_user = request.user
     image = Image.objects.get(id=image_id)
-    print(f'image {image.id}')
     profile = Profile.objects.filter(user=current_user.id).first()
     if request.method == 'POST':
         form=NewCommentForm(request.POST, request.FILES)
